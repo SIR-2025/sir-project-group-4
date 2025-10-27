@@ -28,7 +28,7 @@ class NaoTalkDemo(SICApplication):
         super(NaoTalkDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "XXX"
+        self.nao_ip = "10.0.0.181"
         self.nao = None
         
         # Log files will only be written if set_log_file is called. Must be a valid full path to a directory.
@@ -73,15 +73,16 @@ class NaoTalkDemo(SICApplication):
         """Main application logic."""
         self.logger.info("Starting NAO Talk Demo...")
         try:
-            self.wakeup()
-            # self.nao.tts.request(NaoqiTextToSpeechRequest("Hello, I am a Nao robot!"))
-            self.say()
+            # self.wakeup()
+            self.nao.tts.request(NaoqiTextToSpeechRequest("This is me in the correct Repository!"))
             sleep(2)
-            self.say_animated()
-            sleep(2)
-            self.say_with_gesture()
-            sleep(2)
-            self.rest()
+            # self.say()
+            # sleep(2)
+            # self.say_animated()
+            # sleep(2)
+            # self.say_with_gesture()
+            # sleep(2)
+            # self.rest()
             self.logger.info("Demo completed successfully")
         except Exception as e:
             self.logger.error("Error in demo: {}".format(e=e))
