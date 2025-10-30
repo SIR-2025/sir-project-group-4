@@ -10,3 +10,7 @@ Open a Bash Terminal in VS Code
 
 cd into the python folder
 python nameoffile.py
+
+For dialogflow
+
+run-dialogflow-cx
