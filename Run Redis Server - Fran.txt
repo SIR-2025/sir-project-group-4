@@ -1,0 +1,12 @@
+Open Terminal for Virtual Environment from Anaconda Navigator
+
+
+cd Coding\sir-project-group-4\conf\redis
+redis-server.exe redis.conf
+
+To run stuff
+
+Open a Bash Terminal in VS Code
+
+cd into the python folder
+python nameoffile.py

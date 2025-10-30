@@ -30,7 +30,7 @@ class NaoTrackerDemo(SICApplication):
         super(NaoTrackerDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "XXX"
+        self.nao_ip = "10.0.0.181"
         self.nao = None
         
         # Log files will only be written if set_log_file is called. Must be a valid full path to a directory.
@@ -59,7 +59,7 @@ class NaoTrackerDemo(SICApplication):
             )
             
             # Wait for a specific time
-            time.sleep(10)
+            time.sleep(20)
             
             # Unregister target face
             self.logger.info("Stopping face tracking...")
