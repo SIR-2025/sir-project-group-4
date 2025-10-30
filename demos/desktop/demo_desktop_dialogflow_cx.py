@@ -87,7 +87,7 @@ class DialogflowCXDemo(SICApplication):
         self.logger.info("Initializing Conversational Agents (Dialogflow CX)")
         
         # Load the key json file - you need to get your own keyfile.json
-        with open(abspath(join("..", "..", "conf", "google", "google-key.json"))) as f:
+        with open(abspath(join( "conf", "google", "google-key.json"))) as f:
             keyfile_json = json.load(f)
         
         # TODO: Replace with your actual agent ID and location
@@ -98,8 +98,8 @@ class DialogflowCXDemo(SICApplication):
         # 4. The agent ID is in the URL: ...agents/YOUR-AGENT-ID/...
         # or in Agent Settings under "Agent ID"
         
-        agent_id = "XXX"  # Replace with your agent ID
-        location = "XXX"  # Replace with your agent location if different
+        agent_id = "4d0ad0a1-d873-421d-8f8e-be8229efe112"  # Replace with your agent ID
+        location = "europe-west4" 
         
         # Create configuration for Conversational Agents
         ca_conf = DialogflowCXConf(
