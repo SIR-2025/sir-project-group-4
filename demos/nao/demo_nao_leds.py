@@ -12,6 +12,10 @@ from sic_framework.devices.common_naoqi.naoqi_leds import (
     NaoLEDRequest,
 )
 
+from sic_framework.devices.common_naoqi.naoqi_text_to_speech import (
+    NaoqiTextToSpeechRequest,
+)
+
 # Import libraries necessary for the demo
 import time
 
@@ -26,7 +30,7 @@ class NaoLEDsDemo(SICApplication):
         super(NaoLEDsDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "XXX"
+        self.nao_ip = "10.0.0.181"
         self.nao = None
 
         self.set_log_level(sic_logging.INFO)
@@ -51,11 +55,12 @@ class NaoLEDsDemo(SICApplication):
             time.sleep(1)
 
             self.logger.info("Setting right Eye LEDs to red")
-            reply = self.nao.leds.request(NaoFadeRGBRequest("RightFaceLeds", 1, 0, 0, 0))
+            self.nao.tts.request(NaoqiTextToSpeechRequest("Setting right Eye LEDs to red"))
+            reply = self.nao.leds.request(NaoFadeRGBRequest("RightFaceLeds", 1, 0, 0, 5))
             time.sleep(1)
 
             self.logger.info("Setting left Eye LEDs to blue")
-            reply = self.nao.leds.request(NaoFadeRGBRequest("LeftFaceLeds", 0, 0, 1, 0))
+            reply = self.nao.leds.request(NaoFadeRGBRequest("LeftFaceLeds", 0, 0, 1, 5))
 
             self.logger.info("LEDs demo completed successfully")
         except Exception as e:
