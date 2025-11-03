@@ -12,6 +12,7 @@ from sic_framework.devices.nao_stub import NaoStub
 from sic_framework.devices.common_naoqi.naoqi_motion import (
     NaoPostureRequest,
     NaoqiAnimationRequest,
+    NaoqiMoveRequest
 )
 
 # Import libraries necessary for the demo
@@ -35,7 +36,7 @@ class NaoMotionDemo(SICApplication):
         super(NaoMotionDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "XXX"
+        self.nao_ip = "10.0.0.181"
         self.nao = None
 
         self.set_log_level(sic_logging.INFO)
@@ -59,9 +60,15 @@ class NaoMotionDemo(SICApplication):
             self.nao.motion.request(NaoPostureRequest("Stand", 0.5))
             time.sleep(1)
 
-            self.logger.info("Playing Hey gesture animation")
-            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Hey_1"))
-            time.sleep(1)
+            self.logger.info("Moving left")
+            self.nao.motion.request(NaoqiMoveRequest(0,0.1,0))
+            time.sleep(2)
+            self.logger.info("Moving right")
+            self.nao.motion.request(NaoqiMoveRequest(0,-0.1,0))
+            time.sleep(2)
+            self.logger.info("think about my life choices")
+            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+            time.sleep(2)
 
             # Reset the eyes when necessary
             self.nao.leds.request(NaoLEDRequest("FaceLeds", True))
