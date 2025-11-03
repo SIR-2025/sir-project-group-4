@@ -5,11 +5,19 @@ from sic_framework.core import sic_logging
 # Import the device(s) we will be using
 from sic_framework.devices import Nao
 from sic_framework.devices.nao_stub import NaoStub
+from sic_framework.devices.common_naoqi.naoqi_autonomous import NaoRestRequest
+
 
 # Import message types and requests
 from sic_framework.devices.common_naoqi.naoqi_leds import (
     NaoFadeRGBRequest,
     NaoLEDRequest,
+)
+
+from sic_framework.devices.common_naoqi.naoqi_motion import (
+    NaoPostureRequest,
+    NaoqiAnimationRequest,
+    NaoqiMoveRequest
 )
 
 from sic_framework.devices.common_naoqi.naoqi_text_to_speech import (
@@ -50,19 +58,26 @@ class NaoLEDsDemo(SICApplication):
     def run(self):
         """Main application logic."""
         try:
+            self.logger.info("Requesting Stand posture")
+            self.nao.motion.request(NaoPostureRequest("Stand", 0.5))
+            time.sleep(1)
             self.logger.info("Requesting Eye LEDs to turn on")
             reply = self.nao.leds.request(NaoLEDRequest("FaceLeds", True))
             time.sleep(1)
-
+            #Set Move request first
+            self.nao.motion.request(NaoqiMoveRequest(1,0,0))
             self.logger.info("Setting right Eye LEDs to red")
             self.nao.tts.request(NaoqiTextToSpeechRequest("Setting right Eye LEDs to red"))
-            reply = self.nao.leds.request(NaoFadeRGBRequest("RightFaceLeds", 1, 0, 0, 5))
-            time.sleep(1)
-
+            reply = self.nao.leds.request(NaoFadeRGBRequest("RightFaceLeds", 1, 0, 0, 3))
+            self.nao.tts.request(NaoqiTextToSpeechRequest("Setting left Eye LEDs to blue"))
             self.logger.info("Setting left Eye LEDs to blue")
-            reply = self.nao.leds.request(NaoFadeRGBRequest("LeftFaceLeds", 0, 0, 1, 5))
-
+            reply = self.nao.leds.request(NaoFadeRGBRequest("LeftFaceLeds", 0, 0, 1, 3))
             self.logger.info("LEDs demo completed successfully")
+            self.nao.tts.request(NaoqiTextToSpeechRequest("LEDs demo completed successfully"))
+            # always end with a rest, whenever you reach the end of your code
+            self.nao.autonomous.request(NaoRestRequest())
+            # Reset the eyes when necessary
+            self.nao.leds.request(NaoLEDRequest("FaceLeds", True))
         except Exception as e:
             self.logger.error("Error in LEDs demo: {}".format(e=e))
         finally:
