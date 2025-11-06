@@ -31,7 +31,7 @@ class NaoMotionRecorderDemo(SICApplication):
         super(NaoMotionRecorderDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "XXX"
+        self.nao_ip = "10.0.0.181"
         self.motion_name = "motion_recorder_demo"
         self.record_time = 10
         self.nao = None

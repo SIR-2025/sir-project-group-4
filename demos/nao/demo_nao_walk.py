@@ -39,8 +39,8 @@ def main(robotIP):
     #####################
     ## Enable arms control by Walk algorithm
     #####################
-    motionProxy.setWalkArmsEnabled(True, True)
-    #~ motionProxy.setWalkArmsEnabled(False, False)
+    # motionProxy.setWalkArmsEnabled(True, True)
+    motionProxy.setWalkArmsEnabled(False, False)
 
     #####################
     ## FOOT CONTACT PROTECTION
