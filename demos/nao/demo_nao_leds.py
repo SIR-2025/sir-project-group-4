@@ -74,6 +74,7 @@ class NaoLEDsDemo(SICApplication):
             reply = self.nao.leds.request(NaoFadeRGBRequest("LeftFaceLeds", 0, 0, 1, 3))
             self.logger.info("LEDs demo completed successfully")
             self.nao.tts.request(NaoqiTextToSpeechRequest("LEDs demo completed successfully"))
+            
             # always end with a rest, whenever you reach the end of your code
             self.nao.autonomous.request(NaoRestRequest())
             # Reset the eyes when necessary

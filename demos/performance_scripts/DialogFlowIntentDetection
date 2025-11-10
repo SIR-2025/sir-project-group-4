@@ -1,3 +1,4 @@
+
 # Import basic preliminaries
 from sic_framework.core.sic_application import SICApplication
 from sic_framework.core import sic_logging
@@ -131,7 +132,6 @@ class NaoDialogflowCXDemo(SICApplication):
             
             while not self.shutdown_event.is_set():
                 self.logger.info(" ----- Your turn to talk!")
-                
                 # Request intent detection with the current session
                 reply = self.dialogflow_cx.request(DetectIntentRequest(self.session_id))
                 
@@ -152,10 +152,25 @@ class NaoDialogflowCXDemo(SICApplication):
 
                     #add more intents and corresponding actions here
 
+                    #if reply.intent == "play_start":
+
+                    #start_of_play intent
+
+                    #awake/wake_up_user intent
+
+                    #confused_user intent - needed for start of script
+
+                    #thank you intent
+                    if reply.intent == "small_talk.appraisal.thank_you":
+                        self.logger.info("Thank you intent detected - responding")
+                        gen_text = reply.parameters.get("$request.generative.")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest(gen_text))
+
                     if reply.intent == "small_talk.greetings.bye":
                         self.logger.info("Bye intent detected - going to sleep")
                         self.nao.autonomous.request(NaoRestRequest())
                         self.shutdown_event.set()
+                        
                 else:
                     self.logger.info("No intent detected")
                 
