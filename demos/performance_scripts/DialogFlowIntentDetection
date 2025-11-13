@@ -23,6 +23,12 @@ import json
 from os.path import abspath, join
 import numpy as np
 
+# Import message types
+from sic_framework.core.message_python2 import AudioRequest
+
+# Import libraries necessary for the demo
+import wave
+
 
 class NaoDialogflowCXDemo(SICApplication):
     """
@@ -52,10 +58,13 @@ class NaoDialogflowCXDemo(SICApplication):
     def __init__(self):
         # Call parent constructor (handles singleton initialization)
         super(NaoDialogflowCXDemo, self).__init__()
+
+        # Read the wav file
+        self.audio_file = "clock-chimes-sounds.wav"
         
         # Demo-specific initialization
         self.nao_ip = "10.0.0.181"  
-        self.dialogflow_keyfile_path = abspath(join("conf", "google", "google-key.json"))
+        self.dialogflow_keyfile_path = abspath(join("..", "..", "conf", "google", "google-key.json"))
         self.nao = None
         self.dialogflow_cx = None
         self.session_id = np.random.randint(10000)
@@ -87,6 +96,9 @@ class NaoDialogflowCXDemo(SICApplication):
     def setup(self):
         """Initialize and configure NAO robot and Dialogflow CX."""
         self.logger.info("Initializing NAO robot...")
+
+        self.wavefile = wave.open(self.audio_file, "rb")
+        self.samplerate = self.wavefile.getframerate() * 5
         
         # Initialize NAO
         self.nao = Nao(ip=self.nao_ip, dev_test=False)
@@ -127,9 +139,15 @@ class NaoDialogflowCXDemo(SICApplication):
         """Main application loop."""
         try:
             # Demo starts
-            self.nao.tts.request(NaoqiTextToSpeechRequest("Hello, I am Nao, nice to meet you!"))
+            # self.nao.tts.request(NaoqiTextToSpeechRequest("Hello, I am Nao, nice to meet you!"))
             self.logger.info(" -- Ready -- ")
+            self.nao.tts.request(NaoqiTextToSpeechRequest("Oh no! It appears that this human is unconscious. Let me wake her up!"))
             
+            self.logger.info("Sending audio!")
+            sound = self.wavefile.readframes(self.wavefile.getnframes())
+            message = AudioRequest(sample_rate=self.samplerate, waveform=sound)
+            self.nao.speaker.request(message)
+
             while not self.shutdown_event.is_set():
                 self.logger.info(" ----- Your turn to talk!")
                 # Request intent detection with the current session
@@ -141,6 +159,46 @@ class NaoDialogflowCXDemo(SICApplication):
                         intent=reply.intent,
                         conf=reply.intent_confidence if reply.intent_confidence else "N/A"
                     ))
+
+                    # Later: Shhhhh…. I’m so tired
+                    if reply.intent == "small_talk.user.tired":
+                        self.logger.info("Acquaintance intent detected - introducing itself")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("Okay, if you say so..."))
+
+                        self.logger.info("Sending audio!")
+                        self.nao.speaker.request(message)
+
+                    # Later: Ahhh! Okay okay I’m awake 
+                    if reply.intent == "small_talk.user.angry":
+                        self.logger.info("Good morning! My name is Now!")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("Good morning! My name is Now!"))
+
+                    # Later: - Who are you?
+                    if reply.intent == "small_talk.agent.acquaintance":
+                        self.logger.info("Acquaintance intent detected - introducing itself")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
+
+                    # Later: Guide? Wait, where am I?   
+                    if reply.intent == "small_talk.agent.answer_my_question":
+                        self.logger.info("Confused user intent detected - explaining situation")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("You are in Oz! A very magical land!"))
+
+                    # Later: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
+                    if reply.intent == "small_talk.agent_crazy":
+                        self.logger.info("Confused user intent detected - explaining situation")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("Please calm down. You’re going to tear the carpet. Let’s do some breathing exercises. Breathe in for 3. 1, 2, 3. Hold for 3. 1, 2, 3. Exhale for 3."))
+
+
+                    # Later: Wow. Thank you Nao. That really helped.
+                    if reply.intent == "small_talk.appraisal.thank_you":
+                        self.logger.info("start_of_play intent detected - starting play")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("You are welcome. I’m here to help."))
+
+                    # Later: What am I gonna do? I need to get home. Please help me
+                    if reply.intent == "small_talk.agent.can_you_help":
+                        self.logger.info("start_of_play intent detected - starting play")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("No problem! Follow me. I will show you the way"))
+
                     
                     # Perform gestures based on detected intent (non-blocking)
                     if reply.intent == "welcome_intent":
@@ -150,6 +208,7 @@ class NaoDialogflowCXDemo(SICApplication):
                         self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
                         self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Hey_1"), block=False)
 
+                    
                     #add more intents and corresponding actions here
 
                     #if reply.intent == "play_start":
@@ -161,14 +220,14 @@ class NaoDialogflowCXDemo(SICApplication):
                     #confused_user intent - needed for start of script
 
                     #thank you intent
-                    if reply.intent == "small_talk.appraisal.thank_you":
-                        self.logger.info("Thank you intent detected - responding")
-                        gen_text = reply.parameters.get("$request.generative.")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest(gen_text))
+                    # if reply.intent == "small_talk.appraisal.thank_you":
+                    #     self.logger.info("Thank you intent detected - responding")
+                    #     gen_text = reply.parameters.get("$request.generative.")
+                    #     self.nao.tts.request(NaoqiTextToSpeechRequest(gen_text))
 
-                    if reply.intent == "small_talk.agent.acquaintance":
-                        self.logger.info("Thank you intent detected - responding")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
+                    # if reply.intent == "small_talk.agent.acquaintance":
+                    #     self.logger.info("Thank you intent detected - responding")
+                    #     self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
 
                     if reply.intent == "small_talk.greetings.bye":
                         self.logger.info("Bye intent detected - going to sleep")
