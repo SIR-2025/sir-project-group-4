@@ -54,7 +54,7 @@ class NaoDialogflowCXDemo(SICApplication):
         super(NaoDialogflowCXDemo, self).__init__()
         
         # Demo-specific initialization
-        self.nao_ip = "10.0.0.181"  # TODO: Replace with your NAO's IP address
+        self.nao_ip = "10.0.0.181"  
         self.dialogflow_keyfile_path = abspath(join("conf", "google", "google-key.json"))
         self.nao = None
         self.dialogflow_cx = None
@@ -165,6 +165,10 @@ class NaoDialogflowCXDemo(SICApplication):
                         self.logger.info("Thank you intent detected - responding")
                         gen_text = reply.parameters.get("$request.generative.")
                         self.nao.tts.request(NaoqiTextToSpeechRequest(gen_text))
+
+                    if reply.intent == "small_talk.agent.acquaintance":
+                        self.logger.info("Thank you intent detected - responding")
+                        self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
 
                     if reply.intent == "small_talk.greetings.bye":
                         self.logger.info("Bye intent detected - going to sleep")
