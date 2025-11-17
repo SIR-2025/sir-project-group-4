@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Folder>
+    <Node name="Center_Neutral_NEG_01" />
+    <Node name="Center_Neutral_NEG_02" />
+    <Node name="Center_Neutral_NEG_03" />
+    <Node name="Center_Neutral_NEG_04" />
+    <Node name="Center_Slow_NEG_01" />
+    <Node name="Center_Slow_NEG_02" />
+    <Node name="Center_Strong_NEG_01" />
+    <Node name="Center_Strong_NEG_03" />
+    <Node name="Center_Strong_NEG_04" />
+    <Node name="Center_Strong_NEG_05" />
+    <Node name="Left_Neutral_NEG_01" />
+    <Node name="Left_Strong_NEG_01" />
+    <Node name="Left_Strong_NEG_02" />
+    <Node name="Left_Strong_NEG_03" />
+    <Node name="Left_Strong_NEG_04" />
+    <Node name="Right_Neutral_NEG_01" />
+    <Node name="Right_Strong_NEG_01" />
+    <Node name="Right_Strong_NEG_02" />
+    <Node name="Right_Strong_NEG_03" />
+    <Node name="Right_Strong_NEG_04" />
+</Folder>

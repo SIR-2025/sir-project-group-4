@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheProject xmlns="http://www.aldebaran-robotics.com/schema/choregraphe/project.xsd" xar_version="3">
+    <Box name="root" id="-1" localization="8" tooltip="Enter tooltip here" x="202" y="33">
+        <bitmap>media/images/box/movement/move.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline enable="1" fps="25" start_frame="1" end_frame="-1" size="54">
+            <ActuatorList model="">
+                <ActuatorCurve name="value" actuator="LAnklePitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="5.10013" />
+                    <Key frame="51" value="5.18802">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LAnkleRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-5.27591" />
+                    <Key frame="51" value="-10.9889">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="15" value="-5.3638" />
+                    <Key frame="49" value="-13.5377">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-22.6552" ordinateParam="0.334019" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="15" value="-52.1174" />
+                    <Key frame="49" value="-36.9121">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-22.6552" ordinateParam="0.334019" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHand" recordable="1" mute="0" unit="1">
+                    <Key frame="15" value="0.7244" />
+                    <Key frame="49" value="0.54" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="7.99575" />
+                    <Key frame="51" value="7.29261">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="3.77694" />
+                    <Key frame="51" value="11.9509">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipYawPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-10.1051" />
+                    <Key frame="51" value="-10.193">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LKneePitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-4.65585" />
+                    <Key frame="51" value="-4.91954">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="15" value="69.349" />
+                    <Key frame="49" value="69.7884">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-22.6552" ordinateParam="0.334019" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="15" value="5.89115" />
+                    <Key frame="49" value="-1.57965">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-22.6552" ordinateParam="0.334019" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LWristYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="15" value="-6.15001" />
+                    <Key frame="49" value="-5.88634">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-22.6552" ordinateParam="0.334019" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RAnklePitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="5.2711" />
+                    <Key frame="51" value="4.56796">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RAnkleRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="8.34731" />
+                    <Key frame="51" value="2.98591">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="23" value="10.8962" />
+                    <Key frame="54" value="16.3455">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-20.6562" ordinateParam="0.304547" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="23" value="41.6631" />
+                    <Key frame="54" value="41.751">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-20.6562" ordinateParam="0.304547" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHand" recordable="1" mute="0" unit="1">
+                    <Key frame="23" value="0.6932" />
+                    <Key frame="54" value="0.5" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="8.17634" />
+                    <Key frame="51" value="7.64898">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-8.08845" />
+                    <Key frame="51" value="-0.61764">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipYawPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-10.1051" />
+                    <Key frame="51" value="-10.193">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RKneePitch" recordable="1" mute="0" unit="0">
+                    <Key frame="19" value="-5.27591" />
+                    <Key frame="51" value="-5.27591">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-21.3225" ordinateParam="0.314371" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderPitch" recordable="1" mute="0" unit="0">
+                    <Key frame="23" value="65.389" />
+                    <Key frame="54" value="71.7172">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-20.6562" ordinateParam="0.304547" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderRoll" recordable="1" mute="0" unit="0">
+                    <Key frame="23" value="-6.67737" />
+                    <Key frame="54" value="-5.62267">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-20.6562" ordinateParam="0.304547" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RWristYaw" recordable="1" mute="0" unit="0">
+                    <Key frame="23" value="-5.79845" />
+                    <Key frame="54" value="-5.79845">
+                        <Tangent side="left" interpType="bezier" abscissaParam="-20.6562" ordinateParam="0.304547" />
+                        <Tangent side="right" interpType="bezier" abscissaParam="0" ordinateParam="0" />
+                    </Key>
+                </ActuatorCurve>
+            </ActuatorList>
+        </Timeline>
+        <Resource name="Standing" type="Stop on demand" timeout="1" />
+        <Resource name="Arms" type="Stop on demand" timeout="1" />
+        <Resource name="Legs" type="Stop on demand" timeout="1" />
+    </Box>
+</ChoregrapheProject>

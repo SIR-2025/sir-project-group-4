@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ChoregrapheBox xar_version="3">
+    <Box name="root" id="3" localization="8" tooltip="ID : #01G 0013&#x0A;&#x0A;===================&#x0A;&#x0A;Tags : &#x0A;- Ensemble&#x0A;&#x0A;===================&#x0A;&#x0A;Common dialog : No&#x0A;&#x0A;===================&#x0A;&#x0A;Start stance : LeanRight&#x0A;End stance : Center" x="170" y="221">
+        <bitmap>media/images/box/movement/move.png</bitmap>
+        <script language="4">
+            <content>
+                <![CDATA[]]>
+</content>
+        </script>
+        <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+        <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+        <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+        <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+        <Timeline enable="1" fps="25" start_frame="1" end_frame="-1" size="71">
+            <ActuatorList model="">
+                <!--<ActuatorCurve name="value" actuator="HeadPitch" mute="0" unit="0">
+                    <Key frame="16" value="-7.9" />
+                    <Key frame="24" value="6.1" />
+                    <Key frame="31" value="-0.463328" />
+                    <Key frame="43" value="12.9" />
+                    <Key frame="61" value="0" />
+                </ActuatorCurve>-->
+                <!--<ActuatorCurve name="value" actuator="HeadYaw" mute="0" unit="0">
+                    <Key frame="36" value="-13.2131" />
+                    <Key frame="44" value="0.786869" />
+                    <Key frame="53" value="-9.71313" />
+                    <Key frame="61" value="-1.31313" />
+                </ActuatorCurve>-->
+                <ActuatorCurve name="value" actuator="LAnklePitch" mute="0" unit="0">
+                    <Key frame="29" value="9.6705" />
+                    <Key frame="47" value="7.90786" />
+                    <Key frame="61" value="9.6705" />
+                    <Key frame="71" value="5.53478" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LAnkleRoll" mute="0" unit="0">
+                    <Key frame="29" value="-10.4615" />
+                    <Key frame="47" value="-1.31597" />
+                    <Key frame="61" value="-10.4615" />
+                    <Key frame="71" value="-7.20472" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowRoll" mute="0" unit="0">
+                    <Key frame="16" value="-69.4" />
+                    <Key frame="24" value="-47.2" />
+                    <Key frame="34" value="-32.6" />
+                    <Key frame="43" value="-47.2" />
+                    <Key frame="51" value="-32.6" />
+                    <Key frame="71" value="-24.5194" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LElbowYaw" mute="0" unit="0">
+                    <Key frame="29" value="-119.5" />
+                    <Key frame="38" value="-83.8" />
+                    <Key frame="47" value="-119.5" />
+                    <Key frame="57" value="-83.8" />
+                    <Key frame="71" value="-69.7884" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHand" mute="0" unit="1">
+                    <Key frame="16" value="0.79" />
+                    <Key frame="34" value="0.67" />
+                    <Key frame="43" value="0.35" />
+                    <Key frame="51" value="0.67" />
+                    <Key frame="61" value="0.49" />
+                    <Key frame="71" value="0.3188" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipPitch" mute="0" unit="0">
+                    <Key frame="29" value="2.0191" />
+                    <Key frame="47" value="3.60597" />
+                    <Key frame="61" value="2.0191" />
+                    <Key frame="71" value="7.20952" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipRoll" mute="0" unit="0">
+                    <Key frame="29" value="10.7204" />
+                    <Key frame="47" value="-2.107" />
+                    <Key frame="61" value="10.7204" />
+                    <Key frame="71" value="5.89115" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LHipYawPitch" mute="0" unit="0">
+                    <Key frame="29" value="-13.6208" />
+                    <Key frame="47" value="-13.6208" />
+                    <Key frame="61" value="-13.6208" />
+                    <Key frame="71" value="-9.75358" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LKneePitch" mute="0" unit="0">
+                    <Key frame="29" value="-5.09532" />
+                    <Key frame="47" value="-4.48488" />
+                    <Key frame="61" value="-5.09532" />
+                    <Key frame="71" value="-5.01224" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderPitch" mute="0" unit="0">
+                    <Key frame="16" value="55.9" />
+                    <Key frame="29" value="45.507" />
+                    <Key frame="38" value="45.507" />
+                    <Key frame="47" value="45.507" />
+                    <Key frame="57" value="45.507" />
+                    <Key frame="71" value="83.2311" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LShoulderRoll" mute="0" unit="0">
+                    <Key frame="29" value="5.63669" />
+                    <Key frame="38" value="5.63669" />
+                    <Key frame="47" value="5.63669" />
+                    <Key frame="57" value="5.63669" />
+                    <Key frame="71" value="8.96255" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="LWristYaw" mute="0" unit="0">
+                    <Key frame="34" value="-80.9896" />
+                    <Key frame="43" value="-80.9896" />
+                    <Key frame="51" value="-80.9896" />
+                    <Key frame="61" value="-80.9896" />
+                    <Key frame="71" value="4.91954" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RAnklePitch" mute="0" unit="0">
+                    <Key frame="29" value="7.90786" />
+                    <Key frame="47" value="9.6705" />
+                    <Key frame="61" value="7.90786" />
+                    <Key frame="71" value="5.27591" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RAnkleRoll" mute="0" unit="0">
+                    <Key frame="29" value="1.31597" />
+                    <Key frame="47" value="10.4615" />
+                    <Key frame="61" value="1.31597" />
+                    <Key frame="71" value="7.12163" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowRoll" mute="0" unit="0">
+                    <Key frame="16" value="71.5" />
+                    <Key frame="28" value="47.2" />
+                    <Key frame="38" value="32.6" />
+                    <Key frame="47" value="47.2" />
+                    <Key frame="56" value="32.6" />
+                    <Key frame="71" value="23.9968" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RElbowYaw" mute="0" unit="0">
+                    <Key frame="34" value="119.5" />
+                    <Key frame="43" value="83.8" />
+                    <Key frame="51" value="119.5" />
+                    <Key frame="61" value="83.8" />
+                    <Key frame="71" value="69.2563" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHand" mute="0" unit="1">
+                    <Key frame="16" value="0.79" />
+                    <Key frame="34" value="0.67" />
+                    <Key frame="43" value="0.35" />
+                    <Key frame="51" value="0.67" />
+                    <Key frame="61" value="0.49" />
+                    <Key frame="71" value="0.3136" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipPitch" mute="0" unit="0">
+                    <Key frame="29" value="3.60597" />
+                    <Key frame="47" value="2.0191" />
+                    <Key frame="61" value="3.60597" />
+                    <Key frame="71" value="7.46839" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipRoll" mute="0" unit="0">
+                    <Key frame="29" value="2.107" />
+                    <Key frame="47" value="-10.7204" />
+                    <Key frame="61" value="2.107" />
+                    <Key frame="71" value="-5.35899" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RHipYawPitch" mute="0" unit="0">
+                    <Key frame="29" value="-13.6208" />
+                    <Key frame="47" value="-13.6208" />
+                    <Key frame="61" value="-13.6208" />
+                    <Key frame="71" value="-9.75358" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RKneePitch" mute="0" unit="0">
+                    <Key frame="29" value="-4.48488" />
+                    <Key frame="47" value="-5.09532" />
+                    <Key frame="61" value="-4.48488" />
+                    <Key frame="71" value="-5.09532" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderPitch" mute="0" unit="0">
+                    <Key frame="16" value="55.9" />
+                    <Key frame="34" value="45.507" />
+                    <Key frame="43" value="45.507" />
+                    <Key frame="51" value="45.507" />
+                    <Key frame="61" value="45.507" />
+                    <Key frame="71" value="83.3238" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RShoulderRoll" mute="0" unit="0">
+                    <Key frame="34" value="-5.63669" />
+                    <Key frame="43" value="-5.63669" />
+                    <Key frame="51" value="-5.63669" />
+                    <Key frame="61" value="-5.63669" />
+                    <Key frame="71" value="-8.96736" />
+                </ActuatorCurve>
+                <ActuatorCurve name="value" actuator="RWristYaw" mute="0" unit="0">
+                    <Key frame="34" value="80.9896" />
+                    <Key frame="43" value="80.9896" />
+                    <Key frame="51" value="80.9896" />
+                    <Key frame="61" value="80.9896" />
+                    <Key frame="71" value="6.15001" />
+                </ActuatorCurve>
+            </ActuatorList>
+        </Timeline>
+        <Resource name="All motors" type="Lock" timeout="0" />
+        <Resource name="Standing" timeout="1" type="Lock" />
+    </Box>
+</ChoregrapheBox>

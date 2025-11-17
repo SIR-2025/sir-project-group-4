@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Folder expanded="yes">
+    <Node name="BodyTalk" />
+    <Node name="Emotions" />
+    <Node name="Enumeration" />
+    <Node name="Exclamation" />
+    <Node name="Gestures" />
+    <Node name="Negation" />
+    <Node name="Question" />
+    <Node name="Reactions" />
+    <Node name="Self &amp; others" />
+    <Node name="Space &amp; time" />
+    <Node name="Waiting" />
+</Folder>
