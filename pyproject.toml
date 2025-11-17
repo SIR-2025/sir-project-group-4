@@ -1,0 +1,13 @@
+[project]
+name = "sir-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-dialogflow>=2.43.0",
+    "google-cloud-dialogflow-cx>=2.0.0",
+    "numpy>=2.3.4",
+    "redis>=7.0.1",
+    "social-interaction-cloud>=2.1.7",
+]
