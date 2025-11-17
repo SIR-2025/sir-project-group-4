@@ -166,7 +166,7 @@ class NaoDialogflowCXDemo(SICApplication):
                         # Use send_message for non-blocking gesture execution
                         # This allows the TTS to speak while the gesture is performed
                         self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
-                        self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Hey_1"), block=False)
+                        self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Waiting/WakeUp_1"), block=False)
 
 
                     # movements and dialog for scene 1, scene 2 wip
@@ -185,7 +185,7 @@ class NaoDialogflowCXDemo(SICApplication):
                                 self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Gestures/YouKnowWhat_1"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
 
                             self.logger.info("Sending audio!")
                             self.nao.speaker.request(message)
@@ -202,7 +202,7 @@ class NaoDialogflowCXDemo(SICApplication):
                                 self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Gestures/Me_2"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
 
 
                         # Actor: - Who are you?
@@ -284,7 +284,7 @@ class NaoDialogflowCXDemo(SICApplication):
                         if scene == 1:
                             self.logger.info(" -- Ready -- ")
                             
-                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Reactions/TouchHead_2"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Reactions/TouchHead_2"))
 
                             self.nao.tts.request(NaoqiTextToSpeechRequest("Oh no! It appears that this human is unconscious. Let me wake her up!"))
                             
