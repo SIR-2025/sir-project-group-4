@@ -192,7 +192,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
 
                         # Actor: Ahhh! Okay okay I’m awake 
-                        if reply.intent == "angry":
+                        if reply.intent == "shocked_awake":
                             self.logger.info("Good morning! My name is Now!")
 
                             # responses

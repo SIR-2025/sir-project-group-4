@@ -71,7 +71,7 @@ class NaoMotionDemo(SICApplication):
             time.sleep(2)
 
             # Reset the eyes when necessary
-            self.nao.leds.request(NaoLEDRequest("FaceLeds", True))
+            # self.nao.leds.request(NaoLEDRequest("FaceLeds", True))
             # always end with a rest, whenever you reach the end of your code
             self.nao.autonomous.request(NaoRestRequest())
 
