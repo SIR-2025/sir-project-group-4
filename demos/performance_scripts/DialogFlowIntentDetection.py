@@ -137,6 +137,7 @@ class NaoDialogflowCXDemo(SICApplication):
     
     def run(self):
         """Main application loop."""
+        self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
 
         scene = 0
         try:
@@ -179,10 +180,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Acquaintance intent detected - introducing itself")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
@@ -196,10 +196,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Good morning! My name is Now!")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
@@ -210,10 +209,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Acquaintance intent detected - introducing itself")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
@@ -223,10 +221,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Confused user intent detected - explaining situation")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
@@ -236,10 +233,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Confused user intent detected - explaining situation")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("example gesture CalmDown_1 animation"))
@@ -250,10 +246,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("start_of_play intent detected - starting play")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
@@ -263,10 +258,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("start_of_play intent detected - starting play")
 
                             # responses
-                            if reply.fulfillment_message:
-                                text = reply.fulfillment_message
-                                self.logger.info("Reply: {}".format(text))
-                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
@@ -284,7 +278,7 @@ class NaoDialogflowCXDemo(SICApplication):
                         if scene == 1:
                             self.logger.info(" -- Ready -- ")
                             
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Reactions/TouchHead_2"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Reactions/TouchHead_2"), block=False)
 
                             self.nao.tts.request(NaoqiTextToSpeechRequest("Oh no! It appears that this human is unconscious. Let me wake her up!"))
                             
