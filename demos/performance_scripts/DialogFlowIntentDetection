@@ -175,7 +175,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
                         
                         # Actor: Shhhhh…. I’m so tired
-                        if reply.intent == "tired":
+                        if reply.intent == "tired.scene1":
                             self.logger.info("Acquaintance intent detected - introducing itself")
 
                             # responses
