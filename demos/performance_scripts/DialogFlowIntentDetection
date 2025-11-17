@@ -137,16 +137,12 @@ class NaoDialogflowCXDemo(SICApplication):
     
     def run(self):
         """Main application loop."""
+
+        scene = 0
         try:
             # Demo starts
             # self.nao.tts.request(NaoqiTextToSpeechRequest("Hello, I am Nao, nice to meet you!"))
-            self.logger.info(" -- Ready -- ")
-            self.nao.tts.request(NaoqiTextToSpeechRequest("Oh no! It appears that this human is unconscious. Let me wake her up!"))
             
-            self.logger.info("Sending audio!")
-            sound = self.wavefile.readframes(self.wavefile.getnframes())
-            message = AudioRequest(sample_rate=self.samplerate, waveform=sound)
-            self.nao.speaker.request(message)
 
             while not self.shutdown_event.is_set():
                 self.logger.info(" ----- Your turn to talk!")
@@ -159,47 +155,11 @@ class NaoDialogflowCXDemo(SICApplication):
                         intent=reply.intent,
                         conf=reply.intent_confidence if reply.intent_confidence else "N/A"
                     ))
-
-                    # Later: Shhhhh…. I’m so tired
-                    if reply.intent == "small_talk.user.tired":
-                        self.logger.info("Acquaintance intent detected - introducing itself")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("Okay, if you say so..."))
-
-                        self.logger.info("Sending audio!")
-                        self.nao.speaker.request(message)
-
-                    # Later: Ahhh! Okay okay I’m awake 
-                    if reply.intent == "small_talk.user.angry":
-                        self.logger.info("Good morning! My name is Now!")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("Good morning! My name is Now!"))
-
-                    # Later: - Who are you?
-                    if reply.intent == "small_talk.agent.acquaintance":
-                        self.logger.info("Acquaintance intent detected - introducing itself")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
-
-                    # Later: Guide? Wait, where am I?   
-                    if reply.intent == "small_talk.agent.answer_my_question":
-                        self.logger.info("Confused user intent detected - explaining situation")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("You are in Oz! A very magical land!"))
-
-                    # Later: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
-                    if reply.intent == "small_talk.agent_crazy":
-                        self.logger.info("Confused user intent detected - explaining situation")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("Please calm down. You’re going to tear the carpet. Let’s do some breathing exercises. Breathe in for 3. 1, 2, 3. Hold for 3. 1, 2, 3. Exhale for 3."))
-
-
-                    # Later: Wow. Thank you Nao. That really helped.
-                    if reply.intent == "small_talk.appraisal.thank_you":
-                        self.logger.info("start_of_play intent detected - starting play")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("You are welcome. I’m here to help."))
-
-                    # Later: What am I gonna do? I need to get home. Please help me
-                    if reply.intent == "small_talk.agent.can_you_help":
-                        self.logger.info("start_of_play intent detected - starting play")
-                        self.nao.tts.request(NaoqiTextToSpeechRequest("No problem! Follow me. I will show you the way"))
-
                     
+
+
+
+
                     # Perform gestures based on detected intent (non-blocking)
                     if reply.intent == "welcome_intent":
                         self.logger.info("Welcome intent detected - performing wave gesture")
@@ -208,27 +168,135 @@ class NaoDialogflowCXDemo(SICApplication):
                         self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
                         self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Hey_1"), block=False)
 
+
+                    # movements and dialog for scene 1, scene 2 wip
+                    if scene == 1:
+
+
+                        
+                        # Actor: Shhhhh…. I’m so tired
+                        if reply.intent == "tired":
+                            self.logger.info("Acquaintance intent detected - introducing itself")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Gestures/YouKnowWhat_1"))
+
+                            self.logger.info("Sending audio!")
+                            self.nao.speaker.request(message)
+
+
+                        # Actor: Ahhh! Okay okay I’m awake 
+                        if reply.intent == "angry":
+                            self.logger.info("Good morning! My name is Now!")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Gestures/Me_2"))
+
+
+                        # Actor: - Who are you?
+                        if reply.intent == "acquaintance":
+                            self.logger.info("Acquaintance intent detected - introducing itself")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+
+                        # Actor: Guide? Wait, where am I?   
+                        if reply.intent == "question":
+                            self.logger.info("Confused user intent detected - explaining situation")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+
+                        # Actor: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
+                        if reply.intent == "crazy":
+                            self.logger.info("Confused user intent detected - explaining situation")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("example gesture CalmDown_1 animation"))
+
+
+                        # Actor: Wow. Thank you Nao. That really helped.
+                        if reply.intent == "thank_you":
+                            self.logger.info("start_of_play intent detected - starting play")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+
+                        # Actor: What am I gonna do? I need to get home. Please help me
+                        if reply.intent == "help":
+                            self.logger.info("start_of_play intent detected - starting play")
+
+                            # responses
+                            if reply.fulfillment_message:
+                                text = reply.fulfillment_message
+                                self.logger.info("Reply: {}".format(text))
+                                self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                            
                     
-                    #add more intents and corresponding actions here
+                    # ------------------------------------------------------------------------------------
+                    # code for specific scenes dialog put above line ^
 
-                    #if reply.intent == "play_start":
 
-                    #start_of_play intent
+                    # To be implemented in each scene, move to next scene intent (when we have more scenes ready)
+                    if reply.intent == "ready": 
+                        scene +=1
 
-                    #awake/wake_up_user intent
+                        # immediately start scene one dialog
+                        if scene == 1:
+                            self.logger.info(" -- Ready -- ")
+                            
+                            self.nao.motion.request(NaoqiAnimationRequest("Stand/Reactions/TouchHead_2"))
 
-                    #confused_user intent - needed for start of script
+                            self.nao.tts.request(NaoqiTextToSpeechRequest("Oh no! It appears that this human is unconscious. Let me wake her up!"))
+                            
+                            self.logger.info("Sending audio!")
+                            sound = self.wavefile.readframes(self.wavefile.getnframes())
+                            message = AudioRequest(sample_rate=self.samplerate, waveform=sound)
+                            self.nao.speaker.request(message)
+                        else:
+                            # move to next scene code, TBD
+                            self.logger.info("Moving to next scene")
 
-                    #thank you intent
-                    # if reply.intent == "small_talk.appraisal.thank_you":
-                    #     self.logger.info("Thank you intent detected - responding")
-                    #     gen_text = reply.parameters.get("$request.generative.")
-                    #     self.nao.tts.request(NaoqiTextToSpeechRequest(gen_text))
-
-                    # if reply.intent == "small_talk.agent.acquaintance":
-                    #     self.logger.info("Thank you intent detected - responding")
-                    #     self.nao.tts.request(NaoqiTextToSpeechRequest("I’m Nao! I’m here to be your guide"))
-
+                    # current default turn off intent
                     if reply.intent == "small_talk.greetings.bye":
                         self.logger.info("Bye intent detected - going to sleep")
                         self.nao.autonomous.request(NaoRestRequest())
