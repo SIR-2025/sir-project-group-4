@@ -291,7 +291,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Moving to next scene")
 
                     # current default turn off intent
-                    if reply.intent == "small_talk.greetings.bye":
+                    if reply.intent == "bye":
                         self.logger.info("Bye intent detected - going to sleep")
                         self.nao.autonomous.request(NaoRestRequest())
                         self.shutdown_event.set()
