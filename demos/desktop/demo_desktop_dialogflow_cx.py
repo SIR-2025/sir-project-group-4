@@ -99,7 +99,7 @@ class DialogflowCXDemo(SICApplication):
         # or in Agent Settings under "Agent ID"
         
         agent_id = "4d0ad0a1-d873-421d-8f8e-be8229efe112"  # Replace with your agent ID
-        location = "europe-west4" 
+        location = "europe-west4"  # Replace with your agent location if different
         
         # Create configuration for Conversational Agents
         ca_conf = DialogflowCXConf(

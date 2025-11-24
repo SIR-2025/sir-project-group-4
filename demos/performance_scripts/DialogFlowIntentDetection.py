@@ -217,7 +217,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
 
                         # Actor: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
-                        if reply.intent == "crazy":
+                        if reply.intent == "panic":
                             self.logger.info("Confused user intent detected - explaining situation")
 
                             # responses
@@ -226,11 +226,11 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("example gesture CalmDown_1 animation"))
+                            #self.nao.motion.request(NaoqiAnimationRequest("example gesture CalmDown_1 animation"))
 
 
                         # Actor: Wow. Thank you Nao. That really helped.
-                        if reply.intent == "thank_you":
+                        if reply.intent == "thankful":
                             self.logger.info("start_of_play intent detected - starting play")
 
                             # responses
