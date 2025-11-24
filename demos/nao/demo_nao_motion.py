@@ -60,6 +60,14 @@ class NaoMotionDemo(SICApplication):
             self.nao.motion.request(NaoPostureRequest("Stand", 0.5))
             time.sleep(1)
 
+            self.logger.info("Turning left")
+            self.nao.motion.request(NaoqiMoveRequest(0,0.1,0.8))
+            time.sleep(4)
+
+            self.logger.info("Move Forward")
+            self.nao.motion.request(NaoqiMoveRequest(0.1,0,0))
+            time.sleep(4)
+
             self.logger.info("Moving left")
             self.nao.motion.request(NaoqiMoveRequest(0,0.1,0))
             time.sleep(2)

@@ -158,18 +158,6 @@ class NaoDialogflowCXDemo(SICApplication):
                     ))
                     
 
-
-
-
-                    # Perform gestures based on detected intent (non-blocking)
-                    if reply.intent == "welcome_intent":
-                        self.logger.info("Welcome intent detected - performing wave gesture")
-                        # Use send_message for non-blocking gesture execution
-                        # This allows the TTS to speak while the gesture is performed
-                        self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
-                        self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Waiting/WakeUp_1"), block=False)
-
-
                     # movements and dialog for scene 1, scene 2 wip
                     if scene == 1:
 
@@ -255,6 +243,17 @@ class NaoDialogflowCXDemo(SICApplication):
 
                         # Actor: What am I gonna do? I need to get home. Please help me
                         if reply.intent == "help":
+                            self.logger.info("start_of_play intent detected - starting play")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+
+                        if reply.intent == "concerned":
                             self.logger.info("start_of_play intent detected - starting play")
 
                             # responses
