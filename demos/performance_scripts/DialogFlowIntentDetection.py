@@ -242,6 +242,47 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                        
+                        if reply.intent == "malevolent":
+                            self.logger.info("Malevolent greeting intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.logger.info("Moving forward")
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                        
+
+                        # Deceiving proposal
+                        if reply.intent == "deceiving_proposal":
+                            self.logger.info("deceiving_proposal intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest("Wait a minute, this sounds too good to be true - I am not sure if we can trust this man"), block=False)
+
+                            # actions
+
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_2"))
+
+                        # When Nao senses that Later is confused
+                        if reply.intent == "confused":
+                            self.logger.info("confused intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest("The proximity, insistence and body language of this individual suggest coercion"), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/This_1"))
+
 
                         # Actor: What am I gonna do? I need to get home. Please help me
                         if reply.intent == "help":
@@ -265,21 +306,6 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
-                        
-
-                        if reply.intent == "malevolent_greeting":
-                            self.logger.info("Malevolent greeting intent detected")
-
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
-
-                            # extra actions
-                            self.logger.info("Moving forward")
-                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
-                            time.sleep(10)
-                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
                         
                         if reply.intent == "innocent_answer":
                             self.logger.info("Innocent answer intent detected")
