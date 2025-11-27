@@ -1,12 +1,13 @@
 
 # Import basic preliminaries
+from time import time
 from sic_framework.core.sic_application import SICApplication
 from sic_framework.core import sic_logging
 
 # Import the device(s) we will be using
 from sic_framework.devices import Nao
 from sic_framework.devices.nao import NaoqiTextToSpeechRequest
-from sic_framework.devices.common_naoqi.naoqi_motion import NaoqiAnimationRequest, NaoPostureRequest
+from sic_framework.devices.common_naoqi.naoqi_motion import NaoqiAnimationRequest, NaoPostureRequest, NaoqiMoveRequest
 from sic_framework.devices.common_naoqi.naoqi_autonomous import NaoRestRequest
 
 # Import the service(s) we will be using
@@ -28,6 +29,7 @@ from sic_framework.core.message_python2 import AudioRequest
 
 # Import libraries necessary for the demo
 import wave
+import time
 
 
 class NaoDialogflowCXDemo(SICApplication):
@@ -263,6 +265,34 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                        
+
+                        if reply.intent == "malevolent_greeting":
+                            self.logger.info("Malevolent greeting intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.logger.info("Moving forward")
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                        
+                        if reply.intent == "innocent_answer":
+                            self.logger.info("Innocent answer intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.logger.info("Be confused and need help ")
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
+                            
                             
                     
                     # ------------------------------------------------------------------------------------
@@ -272,6 +302,7 @@ class NaoDialogflowCXDemo(SICApplication):
                     # To be implemented in each scene, move to next scene intent (when we have more scenes ready)
                     if reply.intent == "ready": 
                         scene +=1
+                        self.logger.info("Moving to scene {}".format(scene))
 
                         # immediately start scene one dialog
                         if scene == 1:
