@@ -32,6 +32,10 @@ import wave
 import time
 
 
+
+
+
+
 class NaoDialogflowCXDemo(SICApplication):
     """
     NAO Dialogflow CX demo application.
@@ -77,6 +81,17 @@ class NaoDialogflowCXDemo(SICApplication):
         # self.set_log_file("/Users/apple/Desktop/SAIL/SIC_Development/sic_applications/demos/nao/logs")
         
         self.setup()
+    
+    def fallback_handler(self,reply,text):
+        """Fallback handler if no intent is detected."""
+
+        try : 
+            text = reply.parameters.get("$request.generative.")
+            self.logger.info("Reply: {}".format(text))
+
+        except:
+            self.logger.info("No generative response found, using default reply: {}".format(text))
+        return text
     
     def on_recognition(self, message):
         """
@@ -235,15 +250,13 @@ class NaoDialogflowCXDemo(SICApplication):
                         if reply.intent == "thankful":
                             self.logger.info("start_of_play intent detected - starting play")
 
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
+                            text = self.fallback_handler(reply, "No problem! Follow me. I will show you the way")
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
                         
-                        if reply.intent == "malevolent":
+                        if reply.intent == "malevolent_greeting":
                             self.logger.info("Malevolent greeting intent detected")
 
                             # responses
@@ -271,9 +284,30 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_2"))
 
-                        # When Nao senses that Later is confused
+                        
                         if reply.intent == "confused":
-                            self.logger.info("confused intent detected")
+                            self.logger.info("Confused intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+
+                            # extra actions
+                            self.logger.info("Be confused and need help ")
+                            self.nao.motion.request(
+                                            NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
+                                            block=False
+                                            )
+                            time.sleep(3)
+                            self.nao.motion.request(
+                                            NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
+                                            block=False
+                                            )
+                            time.sleep(3)
+
+                        # When Nao senses that Later is intimidating_attitude
+                        if reply.intent == "intimidating_attitude":
+                            self.logger.info("intimidating_attitude intent detected")
 
                             # responses
                             text = reply.parameters.get("$request.generative.")
@@ -282,6 +316,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/This_1"))
+                        
 
 
                         # Actor: What am I gonna do? I need to get home. Please help me
@@ -319,6 +354,30 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Be confused and need help ")
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
                             
+                        if reply.intent == "uneasy":
+                            self.logger.info("Uneasy intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.logger.info("Moving backward")
+                            self.nao.motion.request(NaoqiMoveRequest(-0.001,0,0))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                        
+                        if reply.intent == "relieved":
+                            self.logger.info("Relieved intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
                             
                     
                     # ------------------------------------------------------------------------------------
