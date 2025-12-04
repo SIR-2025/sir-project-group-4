@@ -192,6 +192,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
 
+                            if len(text.split()) > 15:
+                                time.sleep(6)
+
                             self.logger.info("Sending audio!")
                             self.nao.speaker.request(message)
 
@@ -206,7 +209,8 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"), block=False)
+                            time.sleep(3)
 
 
                         # Actor: - Who are you?
@@ -254,7 +258,14 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                            self.nao.motion.request(
+                            NaoqiAnimationRequest("animations/Stand/Gestures/Kisses_1"), 
+                            block=False
+                            )
+
+                            if len(text.split()) > 30:
+                                time.sleep(4)
+                                
                         
                         if reply.intent == "malevolent_greeting":
                             self.logger.info("Malevolent greeting intent detected")
