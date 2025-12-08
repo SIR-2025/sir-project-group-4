@@ -34,10 +34,8 @@ from sic_framework.core.message_python2 import AudioRequest
 import wave
 import time
 
-
-
-
-
+#Import Libraries for Text Parsing
+import re
 
 class NaoDialogflowCXDemo(SICApplication):
     """
@@ -155,6 +153,30 @@ class NaoDialogflowCXDemo(SICApplication):
         # Register a callback function to handle recognition results
         self.dialogflow_cx.register_callback(callback=self.on_recognition)
     
+    def parse_text_to_gesture(self,text):
+         # Split into alternating speech and gesture tokens
+        tokens = re.findall(r"([^*]+|\*.*?\*)", text)
+
+        for token in tokens:
+            if token.startswith("*") and token.endswith("*"):
+                # Gesture
+                gesture = token.strip("*").strip() #remove * and remove white spaces
+                self.logger.info("Gesture: {}".format(gesture))
+                self.nao.motion.request(
+                    NaoqiAnimationRequest(f"animations/Stand/Gestures/{gesture}")
+                )
+            else:
+                # Speech
+                sentence = token.strip()
+                if sentence:
+                    self.logger.info("Sentence: {}".format(sentence))
+                    self.nao.tts.request(
+                        NaoqiTextToSpeechRequest(sentence), block=True
+                    )
+
+
+
+
     def run(self):
         """Main application loop."""
         self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
