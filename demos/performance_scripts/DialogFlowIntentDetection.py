@@ -37,6 +37,10 @@ import time
 #Import Libraries for Text Parsing
 import re
 
+#random number generation
+import random
+
+
 class NaoDialogflowCXDemo(SICApplication):
     """
     NAO Dialogflow CX demo application.
@@ -155,24 +159,37 @@ class NaoDialogflowCXDemo(SICApplication):
     
     def parse_text_to_gesture(self,text):
          # Split into alternating speech and gesture tokens
-        tokens = re.findall(r"([^*]+|\*.*?\*)", text)
+        sentences = re.split(r"[.|,]\s*|\|\s*",text)
+        for sentence in sentences:
+            randint = random.randint(1,11)
 
-        for token in tokens:
-            if token.startswith("*") and token.endswith("*"):
-                # Gesture
-                gesture = token.strip("*").strip() #remove * and remove white spaces
-                self.logger.info("Gesture: {}".format(gesture))
-                self.nao.motion.request(
-                    NaoqiAnimationRequest(f"animations/Stand/Gestures/{gesture}")
-                )
-            else:
-                # Speech
-                sentence = token.strip()
-                if sentence:
-                    self.logger.info("Sentence: {}".format(sentence))
-                    self.nao.tts.request(
-                        NaoqiTextToSpeechRequest(sentence), block=True
-                    )
+            self.logger.info("Sentence: {}".format(sentence))
+            self.nao.tts.request(
+            NaoqiTextToSpeechRequest(sentence), block=True
+            )
+            self.logger.info("Random Gesture: {randint}")
+            self.nao.motion.request(
+            NaoqiAnimationRequest(f"animations/Stand/Gestures/Explain_{randint}")
+            )
+
+        # tokens = re.findall(r"([^*]+|\*.*?\*)", text)
+
+        # for token in tokens:
+        #     if token.startswith("*") and token.endswith("*"):
+        #         # Gesture
+        #         gesture = token.strip("*").strip() #remove * and remove white spaces
+        #         self.logger.info("Gesture: {}".format(gesture))
+        #         self.nao.motion.request(
+        #             NaoqiAnimationRequest(f"animations/Stand/Gestures/Explain_{gesture}")
+        #         )
+        #     else:
+        #         # Speech
+        #         sentence = token.strip()
+        #         if sentence:
+        #             self.logger.info("Sentence: {}".format(sentence))
+        #             self.nao.tts.request(
+        #                 NaoqiTextToSpeechRequest(sentence), block=True
+        #             )
 
 
 
