@@ -60,10 +60,14 @@ class NaoMotionDemo(SICApplication):
             self.nao.motion.request(NaoPostureRequest("Stand", 0.5))
             time.sleep(1)
 
-            self.nao.motion.request(
-                            NaoqiAnimationRequest("animations/Stand/Gestures/This_1"), 
+            for i in range(5):
+
+                self.nao.motion.request(
+                            NaoqiAnimationRequest(f"animations/Stand/Gestures/ShowFloor_{i+1}"), 
                             block=False
                         )
+                self.logger.info(f"animation_{i}")
+                time.sleep(2)
             time.sleep(3)
 
             # Reset the eyes when necessary
