@@ -274,11 +274,23 @@ class NaoDialogflowCXDemo(SICApplication):
                             if len(text.split()) > 30:
                                 time.sleep(4)
 
+                            # stop idling feature
+                            self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", False), 
+                            block=False
+                            )
+
                             # extra actions
                             self.logger.info("Moving forward")
                             self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
                             time.sleep(10)
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+
+                            # restart the idling feature
+                            self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", True), 
+                            block=False
+                            )
 
                             
                                 
