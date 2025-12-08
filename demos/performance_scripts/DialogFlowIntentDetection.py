@@ -7,7 +7,10 @@ from sic_framework.core import sic_logging
 # Import the device(s) we will be using
 from sic_framework.devices import Nao
 from sic_framework.devices.nao import NaoqiTextToSpeechRequest
-from sic_framework.devices.common_naoqi.naoqi_motion import NaoqiAnimationRequest, NaoPostureRequest, NaoqiMoveRequest
+from sic_framework.devices.common_naoqi.naoqi_motion import (NaoqiAnimationRequest, 
+                                                             NaoPostureRequest, 
+                                                             NaoqiMoveRequest, 
+                                                             NaoqiBreathingRequest)
 from sic_framework.devices.common_naoqi.naoqi_autonomous import NaoRestRequest
 
 # Import the service(s) we will be using
@@ -156,6 +159,11 @@ class NaoDialogflowCXDemo(SICApplication):
         """Main application loop."""
         self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
 
+        self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", True), 
+                            block=False
+                        )
+
         scene = 0
         try:
             # Demo starts
@@ -201,7 +209,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
                         # Actor: Ahhh! Okay okay I’m awake 
                         if reply.intent == "shocked_awake":
-                            self.logger.info("Good morning! My name is Now!")
+                            self.logger.info("Good morning!")
 
                             # responses
                             text = reply.parameters.get("$request.generative.")
@@ -209,7 +217,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"), block=False)
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Hey_4"), block=False)
                             time.sleep(3)
 
 
@@ -223,7 +231,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
 
                         # Actor: Guide? Wait, where am I?   
                         if reply.intent == "question":
@@ -265,6 +273,14 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             if len(text.split()) > 30:
                                 time.sleep(4)
+
+                            # extra actions
+                            self.logger.info("Moving forward")
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+
+                            
                                 
                         
                         if reply.intent == "malevolent_greeting":
@@ -275,11 +291,15 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
+                        
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_9"))
+                            time.sleep(3)
+
                             # extra actions
-                            self.logger.info("Moving forward")
+                            """self.logger.info("Moving forward")
                             self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
                             time.sleep(10)
-                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))"""
                         
 
                         # Deceiving proposal
@@ -287,13 +307,35 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("deceiving_proposal intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest("Wait a minute, this sounds too good to be true - I am not sure if we can trust this man"), block=False)
+                            text = self.fallback_handler(reply, "Wait a minute, this sounds too good to be true - I am not sure if we can trust this man")
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # actions
 
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_2"))
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_2"),
+                                                    block=False)
+                            time.sleep(3)
+
+
+                        # Deceiving 
+                        if reply.intent == "deceiving":
+                            self.logger.info("Deceving intent detected")
+
+                            # responses
+                            text = self.fallback_handler(reply, "")
+
+                            self.nao.motion.request(
+                                            NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
+                                            block=False
+                                            )
+                            time.sleep(3)
+                            self.nao.motion.request(
+                                            NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
+                                            block=False
+                                            )
+                            time.sleep(1)
+
+
 
                         
                         if reply.intent == "confused":
@@ -314,19 +356,21 @@ class NaoDialogflowCXDemo(SICApplication):
                                             NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
                                             block=False
                                             )
-                            time.sleep(3)
+                            time.sleep(1)
 
                         # When Nao senses that Later is intimidating_attitude
                         if reply.intent == "intimidating_attitude":
                             self.logger.info("intimidating_attitude intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "The proximity, insistence and body language of this individual suggest coercion")
+                            
                             self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest("The proximity, insistence and body language of this individual suggest coercion"), block=False)
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/This_1"))
+                            time.sleep(3)
                         
 
 
@@ -389,6 +433,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
+                            time.sleep(3)
                             
                     
                     # ------------------------------------------------------------------------------------
