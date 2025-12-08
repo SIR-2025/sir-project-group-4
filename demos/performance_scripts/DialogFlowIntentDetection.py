@@ -434,6 +434,79 @@ class NaoDialogflowCXDemo(SICApplication):
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
                             time.sleep(3)
+
+                            # extra actions
+                            self.logger.info("Moving backward")
+                            self.nao.motion.request(NaoqiMoveRequest(-0.001,0,0))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+
+                            # responses
+                            text = self.fallback_handler(reply, "Oh dear, there is a human on the floor. Stand up human!")
+                            
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            time.sleep(10)
+
+                        if reply.intent == "rude":
+                            self.logger.info("Rude intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # extra actions
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_1"))
+                            time.sleep(3)
+
+                        if reply.intent == "needing_guidance":
+                            self.logger.info("Needing guidance intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # Motion?
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_7"))
+                            time.sleep(3)
+
+                        if reply.intent == "asking_for_help":
+                            self.logger.info("Asking for help intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            # Motion?
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_5"))
+                            time.sleep(3)
+
+                        if reply.intent == "confident":
+                            self.logger.info("Confident intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # Motion?
+
+                        if reply.intent == "growth":
+                            self.logger.info("Growth intent detected")
+
+                            # responses
+                            text = reply.parameters.get("$request.generative.")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # Motion?
+
+
+
+
+
                             
                     
                     # ------------------------------------------------------------------------------------
