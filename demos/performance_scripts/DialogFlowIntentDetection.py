@@ -91,7 +91,7 @@ class NaoDialogflowCXDemo(SICApplication):
         """Fallback handler if no intent is detected."""
 
         try : 
-            text = self.fallback_handler(reply, "Good morning!")
+            text = reply.parameters.get("$request.generative.")
             self.logger.info("Reply: {}".format(text))
 
         except:
@@ -158,19 +158,23 @@ class NaoDialogflowCXDemo(SICApplication):
         self.dialogflow_cx.register_callback(callback=self.on_recognition)
     
     def parse_text_to_gesture(self,text):
+        # Remove quotation if present
+        text = text.strip('"')
          # Split into alternating speech and gesture tokens
-        sentences = re.split(r"[.|,]\s*|\|\s*",text)
+        sentences = re.split(r"[.|]",text)
         for sentence in sentences:
+ 
             randint = random.randint(1,11)
 
             self.logger.info("Sentence: {}".format(sentence))
             self.nao.tts.request(
-            NaoqiTextToSpeechRequest(sentence), block=True
+            NaoqiTextToSpeechRequest(sentence), block=False
             )
-            self.logger.info("Random Gesture: {randint}")
+            self.logger.info(f"Random Gesture: {randint}")
             self.nao.motion.request(
             NaoqiAnimationRequest(f"animations/Stand/Gestures/Explain_{randint}")
             )
+            time.sleep(0.1)
 
         # tokens = re.findall(r"([^*]+|\*.*?\*)", text)
 
@@ -229,11 +233,10 @@ class NaoDialogflowCXDemo(SICApplication):
                         
                         # Actor: Shhhhh…. I’m so tired
                         if reply.intent == "tired.scene1":
-                            self.logger.info("Acquaintance intent detected - introducing itself")
+                            self.logger.info("Tired intent detected")
 
                             # responses
                             text = self.fallback_handler(reply, "Understood. I will remain here, silent and still, so you may rest undisturbed.")
-                            #text = self.fallback_handler(reply, "Good morning!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -241,7 +244,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
 
                             if len(text.split()) > 15:
-                                time.sleep(6)
+                                time.sleep(7)
 
                             self.logger.info("Sending audio!")
                             self.nao.speaker.request(message)
@@ -253,7 +256,6 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # responses
                             text = self.fallback_handler(reply, "Good morning!")
-                            #text = self.fallback_handler(reply, "Good morning!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -274,26 +276,14 @@ class NaoDialogflowCXDemo(SICApplication):
                             # extra actions
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
 
-                        # Actor: Guide? Wait, where am I?   
-                        # if reply.intent == "question":
-                        #     self.logger.info("Confused user intent detected - explaining situation")
-
-                        #     # responses
-                        #     text = self.fallback_handler(reply, "Good morning!")
-                        #     self.logger.info("Reply: {}".format(text))
-                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
-
-                        #     # extra actions
-                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
-
-                        # Actor: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
+                
                         if reply.intent == "panic":
                             self.logger.info("Confused user intent detected - explaining situation")
 
                             # responses
                             text = self.fallback_handler(reply, "Please calm down. You’re going to tear the carpet. Let’s do some breathing exercises. Breathe in for 3. 1, 2, 3. Hold for 3. 1, 2, 3. Exhale for 3.")
+                            self.parse_text_to_gesture(text)
                             self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             #self.nao.motion.request(NaoqiAnimationRequest("example gesture CalmDown_1 animation"))
@@ -316,22 +306,22 @@ class NaoDialogflowCXDemo(SICApplication):
                                 time.sleep(4)
 
                             # stop idling feature
-                            self.nao.motion.request(
+                            """self.nao.motion.request(
                             NaoqiBreathingRequest("Body", False), 
                             block=False
-                            )
+                            )"""
 
                             # extra actions
                             self.logger.info("Moving forward")
-                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0))
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.018))
                             time.sleep(10)
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
 
                             # restart the idling feature
-                            self.nao.motion.request(
+                            """self.nao.motion.request(
                             NaoqiBreathingRequest("Body", True), 
                             block=False
-                            )
+                            )"""
 
                             
                                 
@@ -346,7 +336,7 @@ class NaoDialogflowCXDemo(SICApplication):
 
                         
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/No_9"))
-                            time.sleep(3)
+                            time.sleep(1)
 
                             # extra actions
                             """self.logger.info("Moving forward")
@@ -375,13 +365,10 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Deceving intent detected")
 
                             # responses
-                            text = self.fallback_handler(reply, "Wait a minute, this sounds too good to be true - I am not sure if we can trust this man.")
+                            text = self.fallback_handler(reply, "I'm not sure about it.")
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                            self.nao.motion.request(
-                                            NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
-                                            block=False
-                                            )
-                            time.sleep(3)
+    
                             self.nao.motion.request(
                                             NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
                                             block=False
@@ -395,8 +382,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Confused intent detected")
 
                             # responses
-                            text = self.fallback_handler(reply, "")
+                            text = self.fallback_handler(reply, "I'm trying to help you")
                             self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # extra actions
                             self.logger.info("Be confused and need help ")
@@ -404,7 +392,7 @@ class NaoDialogflowCXDemo(SICApplication):
                                             NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
                                             block=False
                                             )
-                            time.sleep(3)
+                            time.sleep(1)
                             self.nao.motion.request(
                                             NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
                                             block=False
@@ -419,11 +407,11 @@ class NaoDialogflowCXDemo(SICApplication):
                             text = self.fallback_handler(reply, "The proximity, insistence and body language of this individual suggest coercion")
                             
                             self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
-
-                            # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/This_1"))
-                            time.sleep(3)
+                            self.parse_text_to_gesture(text)
+                            
+                            if len(text) > 30:
+                                time.sleep(3)
+                            
                         
 
 
@@ -450,18 +438,18 @@ class NaoDialogflowCXDemo(SICApplication):
                         #     # extra actions
                         #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
                         
-                        # if reply.intent == "innocent_answer":
-                        #     self.logger.info("Innocent answer intent detected")
+                        if reply.intent == "innocent_answer":
+                            self.logger.info("Innocent answer intent detected")
 
-                        #     # responses
-                        #     text = self.fallback_handler(reply, "Good morning!")
-                        #     self.logger.info("Reply: {}".format(text))
-                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                            # responses
+                            text = self.fallback_handler(reply, "We have never seen you before!")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                        #     # extra actions
-                        #     self.logger.info("Be confused and need help ")
-                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
-                            
+                            # extra actions
+                            self.logger.info("Be confused and need help ")
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
+                        
                         if reply.intent == "uneasy":
                             self.logger.info("Uneasy intent detected")
 
@@ -495,7 +483,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
 
                             # responses
-                            text = self.fallback_handler(reply, "Oh dear, there is a human on the floor. Stand up human!")
+                            text = "Oh dear, there is a human on the floor. Stand up human!"
                             
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
