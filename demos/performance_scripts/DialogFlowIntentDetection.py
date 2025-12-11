@@ -313,15 +313,18 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.logger.info("Moving forward")
-                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.018))
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.02))
                             time.sleep(10)
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                            time.sleep(1)
+
+                            self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
 
                             # restart the idling feature
-                            """self.nao.motion.request(
+                            self.nao.motion.request(
                             NaoqiBreathingRequest("Body", True), 
                             block=False
-                            )"""
+                            )
 
                             
                                 
@@ -390,14 +393,10 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Be confused and need help ")
                             self.nao.motion.request(
                                             NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
-                                            block=False
+                                            block=True
                                             )
                             time.sleep(1)
-                            self.nao.motion.request(
-                                            NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
-                                            block=False
-                                            )
-                            time.sleep(1)
+                           
 
                         # When Nao senses that Later is intimidating_attitude
                         if reply.intent == "intimidating_attitude":
@@ -461,9 +460,15 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.logger.info("Moving backward")
-                            self.nao.motion.request(NaoqiMoveRequest(-0.001,0,0))
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.02))
                             time.sleep(10)
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+
+                            self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
+                            self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", True), 
+                            block=False
+                            )   
                         
                         if reply.intent == "relieved":
                             self.logger.info("Relieved intent detected")
@@ -479,9 +484,15 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # extra actions
                             self.logger.info("Moving backward")
-                            self.nao.motion.request(NaoqiMoveRequest(-0.001,0,0))
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.02))
                             time.sleep(10)
                             self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+
+                            self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
+                            self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", True), 
+                            block=False
+                            )
 
                             # responses
                             text = "Oh dear, there is a human on the floor. Stand up human!"
@@ -508,10 +519,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             # responses
                             text = self.fallback_handler(reply, "People can’t just cheer up if you tell them to. Human emotions are far more complicated than that.")
                             self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
-
-                            # Motion?
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_7"))
+                            self.parse_text_to_gesture(text)
                             time.sleep(3)
 
                         if reply.intent == "asking_for_help":
@@ -520,10 +528,8 @@ class NaoDialogflowCXDemo(SICApplication):
                             # responses
                             text = self.fallback_handler(reply, "I notice our friend is feeling quite sad right now. When someone is upset, it\'s really important to try and understand how they might be feeling. Instead of saying things that might make them feel worse, we can try to imagine ourselves in their shoes. Think about a time you felt sad or frustrated. What would have made you feel better? Often, just listening without judgment, offering a kind word, or even just being quietly present can make a big difference. It shows them that you care about their feelings, and that is what empathy is all about.")
                             self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
-                            # Motion?
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_5"))
-                            time.sleep(3)
+                            self.parse_text_to_gesture(text)
+                            time.sleep(5)
 
                         if reply.intent == "confident":
                             self.logger.info("Confident intent detected")
@@ -547,9 +553,25 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # Motion?
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_10"))
+
+                            # extra actions
+                            self.logger.info("Moving backward")
+                            self.nao.motion.request(NaoqiMoveRequest(0.001,0,0.02))
+                            time.sleep(10)
+                            self.nao.motion.request(NaoqiMoveRequest(0,0,0))
+                            
+                            self.nao.motion.request(NaoPostureRequest("Stand", 0.5), block=False)
+                            self.nao.motion.request(
+                            NaoqiBreathingRequest("Body", True), 
+                            block=False
+                            )   
+
                             time.sleep(3)
 
-                        if reply.intent == "grateful":
+                            text = "We are reaching the end of our route"
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=True)
+
+                        if reply.intent == "Grateful":
                             self.logger.info("Growth intent detected")
 
                             # responses
@@ -559,9 +581,9 @@ class NaoDialogflowCXDemo(SICApplication):
 
                             # Motion?
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_6"))
-                            time.sleep(3)
+                            time.sleep(5)
                             
-                        if reply.intent == "farewell":
+                        if reply.intent == "Farewell":
                             self.logger.info("Growth intent detected")
 
                             # responses
