@@ -91,7 +91,7 @@ class NaoDialogflowCXDemo(SICApplication):
         """Fallback handler if no intent is detected."""
 
         try : 
-            text = reply.parameters.get("$request.generative.")
+            text = self.fallback_handler(reply, "Good morning!")
             self.logger.info("Reply: {}".format(text))
 
         except:
@@ -232,7 +232,8 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Acquaintance intent detected - introducing itself")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Understood. I will remain here, silent and still, so you may rest undisturbed.")
+                            #text = self.fallback_handler(reply, "Good morning!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -251,7 +252,8 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Good morning!")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Good morning!")
+                            #text = self.fallback_handler(reply, "Good morning!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -265,7 +267,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Acquaintance intent detected - introducing itself")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "I’m Nao! I’m here to be your guide. What is your name?")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -273,23 +275,23 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Me_2"))
 
                         # Actor: Guide? Wait, where am I?   
-                        if reply.intent == "question":
-                            self.logger.info("Confused user intent detected - explaining situation")
+                        # if reply.intent == "question":
+                        #     self.logger.info("Confused user intent detected - explaining situation")
 
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                        #     # responses
+                        #     text = self.fallback_handler(reply, "Good morning!")
+                        #     self.logger.info("Reply: {}".format(text))
+                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                            # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                        #     # extra actions
+                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
 
                         # Actor: Oz? That’s impossible! I’m meant to be in Amsterdam not in Oz! Oh my goodness this is a disaster, I’m going to miss my Socially Intelligent Robotics Midterm. How am I going to get home?
                         if reply.intent == "panic":
                             self.logger.info("Confused user intent detected - explaining situation")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Please calm down. You’re going to tear the carpet. Let’s do some breathing exercises. Breathe in for 3. 1, 2, 3. Hold for 3. 1, 2, 3. Exhale for 3.")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -338,7 +340,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Malevolent greeting intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "We have never seen you before.")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -373,7 +375,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Deceving intent detected")
 
                             # responses
-                            text = self.fallback_handler(reply, "")
+                            text = self.fallback_handler(reply, "Wait a minute, this sounds too good to be true - I am not sure if we can trust this man.")
 
                             self.nao.motion.request(
                                             NaoqiAnimationRequest("animations/Stand/Gestures/Thinking_3"), 
@@ -393,7 +395,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Confused intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "")
                             self.logger.info("Reply: {}".format(text))
 
                             # extra actions
@@ -426,45 +428,45 @@ class NaoDialogflowCXDemo(SICApplication):
 
 
                         # Actor: What am I gonna do? I need to get home. Please help me
-                        if reply.intent == "help":
-                            self.logger.info("start_of_play intent detected - starting play")
+                        # if reply.intent == "help":
+                        #     self.logger.info("start_of_play intent detected - starting play")
 
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                        #     # responses
+                        #     text = self.fallback_handler(reply, "Good morning!")
+                        #     self.logger.info("Reply: {}".format(text))
+                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                            # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                        #     # extra actions
+                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
 
-                        if reply.intent == "concerned":
-                            self.logger.info("start_of_play intent detected - starting play")
+                        # if reply.intent == "concerned":
+                        #     self.logger.info("start_of_play intent detected - starting play")
 
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                        #     # responses
+                        #     text = self.fallback_handler(reply, "Good morning!")
+                        #     self.logger.info("Reply: {}".format(text))
+                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                            # extra actions
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
+                        #     # extra actions
+                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Shoot_1"))
                         
-                        if reply.intent == "innocent_answer":
-                            self.logger.info("Innocent answer intent detected")
+                        # if reply.intent == "innocent_answer":
+                        #     self.logger.info("Innocent answer intent detected")
 
-                            # responses
-                            text = reply.parameters.get("$request.generative.")
-                            self.logger.info("Reply: {}".format(text))
-                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+                        #     # responses
+                        #     text = self.fallback_handler(reply, "Good morning!")
+                        #     self.logger.info("Reply: {}".format(text))
+                        #     self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
-                            # extra actions
-                            self.logger.info("Be confused and need help ")
-                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
+                        #     # extra actions
+                        #     self.logger.info("Be confused and need help ")
+                        #     self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_1"))
                             
                         if reply.intent == "uneasy":
                             self.logger.info("Uneasy intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Let’s disengage!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -478,7 +480,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Relieved intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "That’s why I’m here. Until you recalibrate, I will help you understand human behavior. You’re not alone.")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -503,7 +505,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Rude intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Later, you are being very rude to this lady")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -515,7 +517,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Needing guidance intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "People can’t just cheer up if you tell them to. Human emotions are far more complicated than that.")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
@@ -527,7 +529,7 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Asking for help intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "I notice our friend is feeling quite sad right now. When someone is upset, it\'s really important to try and understand how they might be feeling. Instead of saying things that might make them feel worse, we can try to imagine ourselves in their shoes. Think about a time you felt sad or frustrated. What would have made you feel better? Often, just listening without judgment, offering a kind word, or even just being quietly present can make a big difference. It shows them that you care about their feelings, and that is what empathy is all about.")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
                             # Motion?
@@ -538,21 +540,49 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Confident intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "And remember to be nice!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # Motion?
-
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/YouKnowWhat_2"))
+                            time.sleep(3)
+                            
                         if reply.intent == "growth":
                             self.logger.info("Growth intent detected")
 
                             # responses
-                            text = reply.parameters.get("$request.generative.")
+                            text = self.fallback_handler(reply, "Her software has been upgraded!")
                             self.logger.info("Reply: {}".format(text))
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
                             # Motion?
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_10"))
+                            time.sleep(3)
+
+                        if reply.intent == "grateful":
+                            self.logger.info("Growth intent detected")
+
+                            # responses
+                            text = self.fallback_handler(reply, "Humans are complicated creatures so it’s okay to need some help every once in a while")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # Motion?
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Explain_6"))
+                            time.sleep(3)
+                            
+                        if reply.intent == "farewell":
+                            self.logger.info("Growth intent detected")
+
+                            # responses
+                            text = self.fallback_handler(reply, "See you later!")
+                            self.logger.info("Reply: {}".format(text))
+                            self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
+
+                            # Motion? 
+                            self.nao.motion.request(NaoqiAnimationRequest("animations/Stand/Gestures/Salute_1"))
+                            time.sleep(3)
 
 
 
