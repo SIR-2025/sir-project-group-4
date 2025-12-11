@@ -369,10 +369,10 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.nao.tts.request(NaoqiTextToSpeechRequest(text), block=False)
 
     
-                            self.nao.motion.request(
-                                            NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
-                                            block=False
-                                            )
+                            # self.nao.motion.request(
+                            #                 NaoqiAnimationRequest("animations/Stand/Emotions/Neutral/Hesitation_1"), 
+                            #                 block=False
+                            #                 )
                             time.sleep(1)
 
 
@@ -409,8 +409,9 @@ class NaoDialogflowCXDemo(SICApplication):
                             self.logger.info("Reply: {}".format(text))
                             self.parse_text_to_gesture(text)
                             
-                            if len(text) > 30:
-                                time.sleep(3)
+                            # if len(text) > 30:
+                            #     time.sleep(3)
+                            time.sleep(1)
                             
                         
 
