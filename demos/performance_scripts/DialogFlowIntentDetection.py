@@ -41,6 +41,17 @@ import re
 import random
 
 
+# Import the desktop device to use as mic
+from sic_framework.devices.desktop import Desktop
+from sic_framework.devices.common_desktop.desktop_microphone import (
+    DesktopMicrophone,
+    DesktopMicrophoneSensor,
+    MicrophoneConf,
+)
+
+desktop = Desktop(mic_conf=MicrophoneConf(device_index=2))
+
+
 class NaoDialogflowCXDemo(SICApplication):
     """
     NAO Dialogflow CX demo application.
@@ -124,7 +135,7 @@ class NaoDialogflowCXDemo(SICApplication):
         
         # Initialize NAO
         self.nao = Nao(ip=self.nao_ip, dev_test=False)
-        nao_mic = self.nao.mic
+        nao_mic = desktop.mic
         
         self.logger.info("Initializing Dialogflow CX...")
         
